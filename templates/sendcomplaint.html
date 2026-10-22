@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Send Complaint</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #000;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+    }
+
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      flex: 0 0 220px;
+      padding: 24px 14px;
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+    }
+
+    .sidebar-profile {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .sidebar-photo {
+      width: 76px;
+      height: 76px;
+      border: 2px solid #4169e1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile h2 {
+      margin: 10px 0 0;
+      font-size: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .menu { display: grid; gap: 5px; }
+
+    .menu a {
+      padding: 9px 10px;
+      border-radius: 6px;
+      color: #e5e7eb;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .menu a:hover { background: #333; }
+    .menu .logout { margin-top: 8px; color: #ff8a8a; }
+
+    .main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+    }
+
+    .form-card {
+      width: min(100%, 560px);
+      padding: 30px;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 { margin: 0 0 10px; }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: #aaa;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 12px;
+      border: 1px solid #555;
+      border-radius: 8px;
+      background: #292929;
+      color: #e5e7eb;
+      font: inherit;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: 2px solid #9bb8ff;
+      border-color: #4169e1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #4169e1;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #3154c6; }
+
+    @media (max-width: 600px) {
+      .sidebar { flex-basis: 170px; padding: 20px 10px; }
+      .main { padding: 24px 12px; }
+      .form-card { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-profile">
+        <img class="sidebar-photo" src="{{ profile.photo }}" alt="{{ profile.name }}'s photo">
+        <h2>{{ profile.name }}</h2>
+      </div>
+
+      <nav class="menu">
+           <a href="/myapp/userhome/">Home</a>
+        <a href="/myapp/viewprofile/">View Profile</a>
+        <a href="/myapp/addcontact/">Add Contact</a>
+        <a href="/myapp/viewcontact/">View Contacts</a>
+        <a href="/myapp/sendcomplaint/">Send Complaint</a>
+        <a href="/myapp/viewreply/">View Reply</a>
+        <a href="/myapp/changepassword/">Change Password</a>
+        <a class="logout" href="/myapp/login/">Log out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="form-card">
+        <h1>Send a Complaint</h1>
+        <p class="subtitle">Describe the issue you need help with.</p>
+
+        <form action="/myapp/sendcomplaint_post/" method="post">
+          {% csrf_token %}
+
+          <label for="complaint">Complaint</label>
+          <textarea id="complaint" name="complaint"
+                    placeholder="Write your complaint here..."
+                    required></textarea>
+
+          <button type="submit">Submit Complaint</button>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
