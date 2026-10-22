@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Profile</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #000;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      flex: 0 0 220px;
+      padding: 24px 14px;
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+    }
+
+    .sidebar-profile {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .sidebar-photo {
+      width: 76px;
+      height: 76px;
+      border: 2px solid #4169e1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile h2 {
+      margin: 10px 0 0;
+      font-size: 18px;
+    }
+
+    .menu {
+      display: grid;
+      gap: 5px;
+    }
+
+    .menu a {
+      padding: 9px 10px;
+      border-radius: 6px;
+      color: #e5e7eb;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      background: #333;
+    }
+
+    .menu .logout {
+      margin-top: 8px;
+      color: #ff8a8a;
+    }
+
+    .main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+    }
+
+    .profile-card {
+      width: min(100%, 520px);
+      padding: 30px;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    .profile-card h1 {
+      margin: 0 0 24px;
+      text-align: center;
+    }
+
+    .profile-photo {
+      display: block;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 24px;
+      border: 3px solid #4169e1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .detail {
+      margin: 12px 0;
+      padding: 12px;
+      background: #292929;
+      border-radius: 8px;
+
+    }
+
+    .detail strong {
+      display: inline-block;
+      width: 75px;
+      color: #aebeff;
+    }
+
+
+
+    @media (max-width: 600px) {
+      .sidebar {
+        flex-basis: 170px;
+        padding: 20px 10px;
+      }
+
+      .main {
+        padding: 24px 12px;
+      }
+
+      .profile-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      {% for i in i %}
+        <div class="sidebar-profile">
+          <img class="sidebar-photo" src="{{ i.photo }}" alt="{{ i.name }}'s photo">
+          <h2>{{ i.name }}</h2>
+        </div>
+      {% endfor %}
+
+      <nav class="menu">
+          <a href="/myapp/userhome/">Home</a>
+        <a href="/myapp/viewprofile/">View Profile</a>
+        <a href="/myapp/addcontact/">Add Contact</a>
+        <a href="/myapp/viewcontact/">View Contacts</a>
+        <a href="/myapp/sendcomplaint/">Send Complaint</a>
+        <a href="/myapp/viewreply/">View Reply</a>
+        <a href="/myapp/changepassword/">Change Password</a>
+        <a class="logout" href="/myapp/login/">Log out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      {% for i in i %}
+        <section class="profile-card">
+          <h1>My Profile</h1>
+
+          <img class="profile-photo" src="{{ i.photo }}" alt="{{ i.name }}'s photo">
+
+          <p class="detail"><strong>Name</strong> {{ i.name }}</p>
+          <p class="detail"><strong>Email</strong> {{ i.email }}</p>
+          <p class="detail"><strong>Phone</strong> {{ i.phone }}</p>
+          <p class="detail"><strong>Gender</strong> {{ i.gender }}</p>
+
+          <div class="actions">
+            <a href="/myapp/editprofile/">Edit Profile</a>
+          </div>
+        </section>
+      {% empty %}
+        <p>Profile not found.</p>
+      {% endfor %}
+    </main>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>View Contacts</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #000;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      flex: 0 0 220px;
+      padding: 24px 14px;
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+    }
+
+    .sidebar-profile {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .sidebar-photo {
+      width: 76px;
+      height: 76px;
+      border: 2px solid #4169e1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile h2 {
+      margin: 10px 0 0;
+      font-size: 18px;
+    }
+
+    .menu {
+      display: grid;
+      gap: 5px;
+    }
+
+    .menu a {
+      padding: 9px 10px;
+      border-radius: 6px;
+      color: #e5e7eb;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .menu a:hover { background: #333; }
+    .menu .logout { margin-top: 8px; color: #ff8a8a; }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      overflow-x: auto;
+    }
+
+    .content-card {
+      width: min(100%, 1000px);
+      margin: 0 auto;
+      padding: 28px;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 16px;
+    }
+
+    h1 {
+      margin: 0 0 22px;
+    }
+
+    .search-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .search-form input {
+      flex: 1;
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid #555;
+      border-radius: 8px;
+      background: #292929;
+      color: #e5e7eb;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #4169e1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #3154c6; }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #444;
+    }
+
+    th {
+      background: #292929;
+      color: #aebeff;
+    }
+
+    td img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    td a {
+      color: #aebeff;
+      text-decoration: none;
+    }
+
+    td a:hover { text-decoration: underline; }
+
+    .empty {
+      padding: 20px 0;
+      color: #aaa;
+    }
+
+    @media (max-width: 650px) {
+      .sidebar {
+        flex-basis: 170px;
+        padding: 20px 10px;
+      }
+
+      .main { padding: 20px 12px; }
+      .content-card { padding: 18px; }
+      th, td { padding: 9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-profile">
+        <img class="sidebar-photo" src="{{ profile.photo }}" alt="{{ profile.name }}'s photo">
+        <h2>{{ profile.name }}</h2>
+      </div>
+
+      <nav class="menu">
+           <a href="/myapp/userhome/">Home</a>
+        <a href="/myapp/viewprofile/">View Profile</a>
+        <a href="/myapp/addcontact/">Add Contact</a>
+        <a href="/myapp/viewcontact/">View Contacts</a>
+        <a href="/myapp/sendcomplaint/">Send Complaint</a>
+        <a href="/myapp/viewreply/">View Reply</a>
+        <a href="/myapp/changepassword/">Change Password</a>
+        <a class="logout" href="/myapp/login/">Log out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="content-card">
+        <h1>My Contacts</h1>
+
+        <form class="search-form" action="/myapp/viewcontact_post/" method="post">
+          {% csrf_token %}
+          <input type="text" name="search" placeholder="Search contacts by name">
+          <button type="submit">Search</button>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sl no</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Photo</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for contact in i %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ contact.name }}</td>
+                  <td>{{ contact.email }}</td>
+                  <td>{{ contact.phone }}</td>
+                  <td>{{ contact.gender }}</td>
+                  <td><img src="{{ contact.photo }}" alt="{{ contact.name }}'s photo"></td>
+                  <td><a href="/myapp/editcontact/{{ contact.id }}">Edit</a></td>
+                  <td><a href="/myapp/deletecontact/{{ contact.id }}">Delete</a></td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="8" class="empty">No contacts found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

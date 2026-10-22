@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Home</title>
+
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #000;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      flex: 0 0 220px;
+      padding: 24px 14px;
+      background: #1f1f1f;
+      border-right: 1px solid #444;
+    }
+
+    .profile-heading {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .profile-heading img {
+      width: 76px;
+      height: 76px;
+      border: 2px solid #4169e1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-heading h1 {
+      margin: 10px 0 0;
+      font-size: 18px;
+
+    }
+
+    .menu {
+      display: grid;
+      gap: 5px;
+    }
+
+    .menu a {
+      padding: 9px 10px;
+      border-radius: 6px;
+      color: #e5e7eb;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      background: #333;
+    }
+
+    .menu .logout {
+      margin-top: 8px;
+      color: #ff8a8a;
+    }
+
+    .main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+    }
+
+
+    .welcome-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 800px;
+}
+
+.welcome-text p {
+  margin: 0;
+    margin-left: 10px;
+  line-height: 1.5;
+}
+
+
+    @media (max-width: 600px) {
+      .sidebar {
+        flex-basis: 170px;
+        padding: 20px 10px;
+      }
+
+      .main {
+        padding: 24px 12px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="profile-heading">
+        <img src="{{ profile.photo }}" alt="{{ profile.name }}'s photo">
+        <h1>{{ profile.name }}</h1>
+      </div>
+
+      <nav class="menu">
+        <a href="/myapp/userhome/">Home</a>
+        <a href="/myapp/viewprofile/">View Profile</a>
+        <a href="/myapp/addcontact/">Add Contact</a>
+        <a href="/myapp/viewcontact/">View Contacts</a>
+        <a href="/myapp/sendcomplaint/">Send Complaint</a>
+        <a href="/myapp/viewreply/">View Reply</a>
+        <a href="/myapp/changepassword/">Change Password</a>
+        <a class="logout" href="/myapp/login/">Log out</a>
+      </nav>
+    </aside>
+    <div class="welcome-text">
+    <main class="main">
+        <h1>Student Portal</h1>
+
+            <p>Welcome to the Student Details portal.
+            This space helps you keep your personal and academic information organized in one place.
+            Start by completing your profile with your correct name, email address, phone number, gender, and a recent photo.
+            Please check your details carefully and update them whenever something changes.
+            Use View Profile to review your information and Edit Profile to make corrections.
+                You can add and manage contacts, send a complaint if you need assistance, and check the reply from the administration through the menu.</p>
+            <p>Keeping your information complete and accurate helps the school communicate with you and provide support when needed.
+            Thank you for using the Student Details portal and keeping your profile up to date. <br>
+            Your accurate information helps the school maintain its records, contact you when needed, and share important updates.<br>
+            If you need help, the administration is always here to support you.<br>
+                We appreciate your cooperation.</p>
+    </main>
+  </div>
+  </div>
+</body>
+</html>
